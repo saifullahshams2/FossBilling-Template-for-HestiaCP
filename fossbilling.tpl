@@ -39,6 +39,16 @@ server {
     location ~* .(bak|conf|inc|ini|lock|log|old|sh|sql|twig|yaml|php)$ {
 		return 404;
 	}
+
+    # Block /vendor completely
+    location ^~ /vendor/ {
+        return 403;
+    }
+    
+    # Block direct access to config.php
+    location = /config.php {
+        return 403;
+    }
     
     # Disable PHP execution in data and uploads, block public access to log and cache folders
     location ^~ /data/.*\.php$ {
